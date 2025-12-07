@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Missing Conversations</title>
+    <meta
+      name="description"
+      content="The Missing Conversations helps parents bridge timeless family wisdom with the urgent challenges of the modern world."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clay: "#b5651d",
+              moss: "#536d5a",
+              dusk: "#2d3a3f",
+              parchment: "#f7f0e7",
+              ink: "#32292f"
+            },
+            fontFamily: {
+              serif: ["Playfair Display", "serif"],
+              sans: ["Lato", "system-ui", "sans-serif"]
+            }
+          }
+        }
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <style>
+      :root {
+        --parchment: #f7f0e7;
+        --grain-light: rgba(255, 250, 240, 0.85);
+      }
+      html {
+        scroll-behavior: smooth;
+        background-color: var(--parchment);
+        scroll-padding-top: clamp(4rem, 6vw, 7rem);
+      }
+      body {
+        font-family: "Lato", system-ui, sans-serif;
+        color: #32292f;
+        background-color: var(--parchment);
+        background-image:
+          radial-gradient(circle at 1px 1px, rgba(50, 41, 47, 0.04) 1px, transparent 0),
+          linear-gradient(135deg, rgba(181, 101, 29, 0.08), transparent 60%),
+          linear-gradient(45deg, rgba(83, 109, 90, 0.05), transparent 55%);
+        background-size: 24px 24px, 100% 100%, 100% 100%;
+        background-repeat: repeat, no-repeat, no-repeat;
+      }
+      #hero,
+      .anchor-section {
+        scroll-margin-top: clamp(4.5rem, 7vw, 7rem);
+      }
+      .texture-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke='%2332292f' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M0 .5H180'/%3E%3Cpath d='M.5 0V180'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 180px 180px;
+        mix-blend-mode: multiply;
+        opacity: 0.6;
+      }
+      .section-shell {
+        position: relative;
+        background: var(--grain-light);
+        border-radius: 28px;
+        border: 1px solid rgba(50, 41, 47, 0.12);
+        box-shadow: 0 28px 60px -45px rgba(50, 41, 47, 0.6);
+        overflow: hidden;
+      }
+      .section-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(181, 101, 29, 0.08), rgba(83, 109, 90, 0.05));
+        opacity: 0.85;
+        pointer-events: none;
+      }
+      .section-shell::after {
+        content: "";
+        position: absolute;
+        inset: clamp(1rem, 3vw, 1.8rem);
+        border: 1px dashed rgba(181, 101, 29, 0.22);
+        border-radius: 20px;
+        pointer-events: none;
+      }
+      .section-shell > * {
+        position: relative;
+        z-index: 1;
+      }
+      .decorated-heading {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.75rem;
+      }
+      .decorated-heading::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(90deg, #b5651d, rgba(181, 101, 29, 0));
+        border-radius: 999px;
+        opacity: 0.7;
+      }
+      .compass-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        border: 1px solid rgba(181, 101, 29, 0.4);
+        background: rgba(247, 240, 231, 0.9);
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #6b4a2f;
+      }
+      .ink-list li {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .ink-list li::before {
+        content: "✥";
+        color: #b5651d;
+        font-size: 0.8rem;
+        position: relative;
+        top: 0.25rem;
+      }
+      .map-ring {
+        position: absolute;
+        inset: auto auto 8% -12%;
+        width: 360px;
+        height: 360px;
+        border: 1px solid rgba(50, 41, 47, 0.2);
+        border-radius: 50%;
+        opacity: 0.18;
+        transform: rotate(-8deg);
+      }
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(3.2rem, 5vw, 4.8rem);
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        color: #32292f;
+      }
+      .hero-hook {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.9rem, 3vw, 2.8rem);
+        line-height: 1.2;
+        color: #b5651d;
+      }
+      .hero-hook span {
+        display: inline-block;
+      }
+      .hero-hook span:first-child {
+        padding: 0.4rem 0.6rem;
+        background: rgba(50, 41, 47, 0.06);
+        border-left: 4px solid #b5651d;
+        border-radius: 6px;
+        color: #2d3a3f;
+      }
+      .hero-hook span:last-child {
+        margin-top: 0.5rem;
+        padding-left: 0.4rem;
+        border-left: 4px solid #2d3a3f;
+        color: #2d3a3f;
+      }
+      @media (max-width: 768px) {
+        .map-ring {
+          width: 220px;
+          height: 220px;
+          inset: auto -30% 6% auto;
+        }
+      }
+      @media (max-width: 768px) {
+        .section-shell {
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <header class="sticky top-0 z-40 border-b border-black/40 bg-[#1f1b17] text-parchment shadow-[0_8px_18px_rgba(15,10,8,0.4)]">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a href="#hero" class="text-lg font-semibold tracking-wide text-[#fdf6ee]">The Missing Conversations</a>
+        <nav class="hidden items-center gap-6 text-sm font-semibold text-[#fdf6ee] md:flex">
+          <a href="#big-idea" class="transition hover:text-clay">Big Idea</a>
+          <a href="#our-approach" class="transition hover:text-clay">Approach</a>
+          <a href="#conversations" class="transition hover:text-clay">Conversations</a>
+          <a href="#free-guide" class="transition hover:text-clay">Free Guide</a>
+          <a href="#journey" class="transition hover:text-clay">Journey</a>
+        </nav>
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          class="inline-flex items-center rounded-md border border-parchment/30 px-3 py-2 text-sm font-medium text-parchment md:hidden"
+        >
+          Menu
+        </button>
+      </div>
+      <div id="mobile-menu" class="mx-6 mb-4 hidden flex-col gap-3 rounded-md border border-parchment/20 bg-[#2a241e] p-4 text-sm text-[#fdf6ee] md:hidden">
+        <a href="#big-idea" class="hover:text-clay">Big Idea</a>
+        <a href="#our-approach" class="hover:text-clay">Approach</a>
+        <a href="#conversations" class="hover:text-clay">Conversations</a>
+        <a href="#free-guide" class="hover:text-clay">Free Guide</a>
+        <a href="#journey" class="hover:text-clay">Journey</a>
+      </div>
+    </header>
+
+    <main id="hero">
+      <section class="relative overflow-hidden bg-gradient-to-b from-parchment via-parchment to-white">
+        <div class="absolute inset-0 opacity-25">
+          <div class="pointer-events-none h-full w-full bg-[radial-gradient(circle_at_top,_#b5651d1a,_transparent_70%)]"></div>
+          <div class="texture-overlay opacity-40"></div>
+          <div class="map-ring hidden md:block"></div>
+        </div>
+        <div class="relative mx-auto max-w-5xl px-6 pb-16 pt-28 text-dusk sm:pb-24">
+          <div class="space-y-20">
+            <div class="space-y-0">
+              <h1 class="hero-title">The Missing Conversations</h1>
+              <p class="hero-hook">
+                <span>A Guide to the Talks Nobody Prepared Us For...</span><br />
+                <span>...But Our Kids Need Us to Have.</span>
+              </p>
+            </div>
+            <div class="section-shell space-y-4 px-8 py-8">
+              <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">The Week I Ran Out of Answers</h2>
+              <p class="text-base text-dusk/85 md:text-lg">
+                It doesn't take a dramatic event to realize your parenting playbook is out of date. Sometimes, it's a series of stacked moments that reveal the gaps. 
+                In one week my daughter argued—logically—for Snapchat to navigate her social world, I testified about AI in schools, and both my kids spent hours hiding in lockdown, terrified death was imminent. 
+                Those stacked moments made it obvious: the conversations our kids need today aren’t in any parenting playbook we inherited. 
+                They touch on safety, identity, and their future as they navigate a world that is nearly unrecognizable to the one from our own childhoods. 
+                For each one, I felt profoundly underprepared and didn't have time to become an expert before engaging.
+              </p>
+              <p class="text-lg font-semibold italic text-dusk/80">
+                “The conversations we need are largely missing—either because we don’t know they’re needed, or we simply don’t know what to say. How can any parent be expected to be an expert on all of this?”
+              </p>
+              <p class="text-base text-dusk/85 md:text-lg">
+                Unfortunately, the institutions designed to support our children are impossibly behind. It's on us. 
+                If we, as parents, opt out of these essential conversations—either because we feel overwhelmed or a mistaken belief
+                that someone else will step in—our kids will be adrift in a sea of powerful forces.
+                That’s why The Missing Conversations exists—to help you build a compass rooted in your family’s throughlines and 
+                a map for the modern terrain so you can lean in with confidence to guide your children even when that feels impossibly hard.
+              </p>
+            </div>
+          </div>
+          <div class="mt-12 h-px w-full bg-gradient-to-r from-transparent via-dusk/20 to-transparent"></div>
+        </div>
+      </section>
+
+      <section class="bg-transparent py-8">
+        <div class="mx-auto max-w-5xl px-6">
+          <div class="section-shell px-8 py-8 text-dusk/90">
+            <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">Bridging the Gap: Timeless Guidance for Today's World</h2>
+            <p class="mt-6 text-lg leading-relaxed text-dusk/90">
+                In a world changing faster than ever, guiding our kids through new challenges—from AI to social pressures—feels overwhelming.
+                But the wisdom you already possess, grounded in your family's enduring values, is more powerful than you realize. Discover a
+                two-pronged approach to conversation that empowers your family with clarity, connection, and confidence: timeless principles
+                for lasting resilience, and practical guides for navigating urgent challenges. <br /><br />
+            </p>
+            <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">An Invitation</h2>
+            <ul class="mt-6 space-y-6 text-base">
+              <li>• To rediscover and name the throughlines that serve as your family's compass.</li>
+              <li>• To apply that compass to new terrain: AI, social pressures, attention traps, and polarized spaces.</li>
+              <li>• To equip your family with the tools to navigate uncharted territories together.</li>
+              <li>• To join a community of parents choosing to have the difficult talks our kids need us to have.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="our-approach" class="anchor-section bg-transparent py-24">
+        <div class="mx-auto max-w-5xl px-6">
+          <div class="section-shell space-y-12 px-6 py-10 md:px-12">
+            <div>
+              <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">Your Family's Compass: Building Resilience &amp; Responding to the Urgent.</h2>
+              <p class="mt-6 text-lg leading-relaxed text-dusk/90">
+                At the heart of "The Missing Conversations" is a powerful two-pronged approach designed to equip your family for any
+                challenge, known or unknown. We combine enduring principles for long-term strength with practical, timely tools for immediate
+                needs.
+              </p>
+            </div>
+            <div class="grid gap-8 md:grid-cols-2">
+              <article class="rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+                <h3 class="font-serif text-2xl text-ink">1. The Foundation: Family Throughlines</h3>
+                <p class="mt-4 text-base leading-relaxed text-dusk/90">
+                  Just like good nutrition, exercise, and sleep build baseline physical health, your family's unique, enduring values and
+                  wisdom form a "Throughline"—a core resilience that prepares your kids for any future challenge. We help you uncover,
+                  articulate, and intentionally apply these timeless principles to everything from AI ethics to social pressures. This is
+                  about discovering and utilizing the strength you already have, creating an inner compass that guides your family.
+                </p>
+              </article>
+              <article class="rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+                <h3 class="font-serif text-2xl text-ink">2. The Practical Tools: The Conversation First Aid Kit</h3>
+                <p class="mt-4 text-base leading-relaxed text-dusk/90">
+                  When specific, urgent challenges arise—a new app, a deepfake scare, a complex social dilemma—you need more than just
+                  general wisdom. Our "First Aid Kit" provides rapid-response guides to help you address these acute issues effectively. Each
+                  guide offers a "Lowdown," "Parent/Kid Perspectives," actionable "Conversation Starters," and a "Family Playbook" for
+                  strategies you can implement right away.
+                </p>
+              </article>
+            </div>
+            <div class="rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+              <h3 class="font-serif text-2xl text-ink">Our Guiding Principles for Every Conversation</h3>
+              <ul class="mt-4 space-y-3 text-base text-dusk/90">
+                <li><span class="font-semibold text-dusk">Start with a Shared Reality:</span> agree on what's really happening before you try to solve it.</li>
+                <li>
+                  <span class="font-semibold text-dusk">Find the "And":</span> frame every talk as you and your kid vs. the problem, not you vs. them.
+                </li>
+                <li><span class="font-semibold text-dusk">Lead with Curiosity:</span> your wisdom is the asset; begin with questions before authority.</li>
+                <li><span class="font-semibold text-dusk">Speak the Tension:</span> name the pull you both feel without judgment so the real issue is on the table.</li>
+                <li><span class="font-semibold text-dusk">Make Space for Silence:</span> let pauses breathe; big conversations rarely finish in one sitting.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="conversations" class="anchor-section bg-transparent py-24">
+        <div class="mx-auto max-w-6xl px-6">
+          <div class="section-shell px-6 py-10 md:px-12">
+            <div class="md:text-center">
+              <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">The Conversations That Equip Your Family's Journey.</h2>
+              <p class="mt-6 text-lg leading-relaxed text-dusk/90">
+                Our conversation guides serve as your essential "First Aid Kit," equipping you with both timeless wisdom and timely strategies
+                for the modern world. They provide clear roadmaps to navigate specific, urgent topics while reinforcing your family's
+                enduring "Throughlines" across every dimension of your child's life. Here's a glimpse into The Missing Conversations
+                framework:
+              </p>
+            </div>
+            <div class="mt-12 grid gap-8 md:grid-cols-3">
+              <article class="flex flex-col rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+                <h3 class="font-serif text-2xl text-ink">Guiding Their Inner World</h3>
+                <p class="mt-4 text-base leading-relaxed text-dusk/90">
+                  These conversations focus on building a strong foundation of self-awareness, emotional resilience, and authentic connection.
+                </p>
+                <ul class="mt-6 space-y-2 text-sm text-dusk/80">
+                  <li>• When Their Friend is in Crisis</li>
+                  <li>• Attention, Apps, and Social Planning</li>
+                  <li>• Active Shooter Drills and Navigating Trauma</li>
+                </ul>
+              </article>
+              <article class="flex flex-col rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+                <h3 class="font-serif text-2xl text-ink">Guiding Their Digital World</h3>
+                <p class="mt-4 text-base leading-relaxed text-dusk/90">
+                  These conversations directly address the opportunities and ethical dilemmas of our rapidly evolving, AI-driven digital landscape.
+                </p>
+                <ul class="mt-6 space-y-2 text-sm text-dusk/80">
+                  <li>• AI as a Study Buddy</li>
+                  <li>• Your Friend is an Algorithm</li>
+                  <li>• Seeing is No Longer Believing</li>
+                </ul>
+              </article>
+              <article class="flex flex-col rounded-2xl border border-dusk/10 bg-white/90 p-8 shadow-sm">
+                <h3 class="font-serif text-2xl text-ink">Guiding Their Path in the World</h3>
+                <p class="mt-4 text-base leading-relaxed text-dusk/90">
+                  These conversations empower your child to confidently forge their own path, anchored in their values and contributing meaningfully to their community.
+                </p>
+                <ul class="mt-6 space-y-2 text-sm text-dusk/80">
+                  <li>• Navigating Online Pornography</li>
+                  <li>• Some Things Can't Be Unseen</li>
+                  <li>• Engaging Productively in a Polarized World</li>
+                </ul>
+              </article>
+            </div>
+            <p class="mt-12 text-lg text-dusk/90">
+              This is just the beginning. Our mission is to continuously build a library of these "First Aid Kit" conversation guides, each designed to empower your family with timely insights and actionable strategies.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="free-guide" class="anchor-section bg-transparent py-24">
+        <div class="mx-auto max-w-5xl px-6">
+          <div class="section-shell px-6 py-10 md:px-12">
+            <div class="grid gap-12 md:grid-cols-[1.3fr_1fr] md:items-start">
+              <div>
+                <h2 class="decorated-heading font-serif text-3xl text-ink md:text-4xl">Your AI-Powered First Aid Kit for Digital Challenges.</h2>
+                <p class="mt-6 text-lg leading-relaxed text-dusk/90">
+                  Ready to start having these crucial conversations? Gain immediate access to our unique Interactive AI Conversation Guide
+                  – an AI-enabled NotebookLM workbook designed to give you a head start. Chat directly with curated content, uncover key
+                  insights, explore multimedia overviews, and prepare for the conversations your family needs most.
+                </p>
+                <p class="mt-4 text-base text-dusk/85">
+                  This interactive guide focuses on our three core AI conversations and serves as a living example of how The Missing Conversations
+                  helps you bridge your family's enduring wisdom with today's urgent challenges.
+                </p>
+                <div class="mt-8 space-y-4 text-base text-dusk/90">
+                  <p>
+                    I'm personally welcoming every family into the community. Send a quick note to
+                    <a href="mailto:themissingconversationsguide@gmail.com" class="font-semibold text-clay underline">themissingconversationsguide@gmail.com</a>
+                    . I'll reply with your Interactive Guide and a warm introduction.
+                  </p>
+                  <a
+                    href="mailto:themissingconversationsguide@gmail.com?subject=I'd%20love%20the%20Interactive%20Guide"
+                    class="inline-flex items-center justify-center rounded-full bg-dusk px-6 py-3 text-sm font-semibold text-parchment transition hover:bg-clay"
+                    >Email Whit &amp; Get the Guide</a
+                  >
+                </div>
+              </div>
+              <div class="rounded-2xl border border-dusk/10 bg-white/90 p-6 shadow-sm">
+                <h3 class="font-serif text-xl text-ink">What You'll Receive</h3>
+                <ul class="mt-4 space-y-3 text-sm text-dusk/90">
+                  <li>• The Interactive AI Conversation Guide (NotebookLM workbook)</li>
+                  <li>• A personalized welcome and next-step suggestions</li>
+                  <li>• Updates on upcoming workshops, book news, and community circles</li>
+                </ul>
+                <p class="mt-4 text-xs text-dusk/60">Handwritten responses mean you can ask questions right away—no bots, just us.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="journey" class="anchor-section bg-transparent py-24">
+        <div class="mx-auto max-w-5xl px-6">
+          <div class="section-shell space-y-12 px-6 py-10 md:px-12">
+            <div class="grid gap-12 md:grid-cols-[minmax(240px,1fr)_1.6fr] md:items-center">
+              <figure class="aspect-square w-full overflow-hidden rounded-3xl border border-dusk/10 bg-parchment shadow-sm">
+                <img
+                  src="assets/images/michael-whitaker-headshot.jpg"
+                  alt="Portrait of Mike Whitaker, creator of The Missing Conversations."
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </figure>
+              <div>
+                <p class="text-xs uppercase tracking-[0.3em] text-clay/70">Your Fellow Traveler</p>
+                <h2 class="mt-2 font-serif text-3xl text-ink md:text-4xl">Hi, I'm Whit.</h2>
+                <p class="mt-4 text-lg leading-relaxed text-dusk/90">
+                  I'm not a world-renowned expert. I'm a parent, right there in the trenches with you. My approach is simple: I'm sharing what I'm learning as I adapt 
+                  the best principles from my research and my experience helping team succeed - both in the corporate world and on the sports field - for my most 
+                  important team: my family. My hope is to give you a starting point and community that helps you have more of these 
+                  missing conversations in a way that feels authentic to you.
+                </p>
+                <div class="mt-6 space-y-2 text-sm text-clay">
+                  <a href="https://mikewhitaker1.substack.com" target="_blank" rel="noopener" class="block underline">
+                    Read my Substack: Navigating AI Transitions with Whit
+                  </a>
+                  <a
+                    href="https://podcasts.apple.com/us/podcast/46-navigating-ai-build-your-parent-playbook/id1486403001?i=1000734497217"
+                    target="_blank"
+                    rel="noopener"
+                    class="block underline"
+                  >
+                    Listen to the Parenting Well conversation
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/michaelwhitakericf/"
+                    target="_blank"
+                    rel="noopener"
+                    class="block underline"
+                  >
+                    Connect with me on LinkedIn
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-10 md:grid-cols-2">
+              <div class="rounded-3xl border border-dusk/15 bg-white/90 p-8">
+                <h3 class="font-serif text-2xl text-ink">Join the Community</h3>
+                <p class="mt-4 text-base text-dusk/90">
+                  This project grows through conversation. Send a short email to share who you are, what your kids are facing, and what brought you to the community. 
+                  I read and reply to every note personally.
+                </p>
+                <a
+                  href="mailto:themissingconversationsguide@gmail.com?subject=I'd%20love%20to%20join%20the%20community"
+                  class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-dusk px-6 py-3 text-sm font-semibold text-parchment transition hover:bg-clay"
+                  >Email Whit &amp; Join the Community</a
+                >
+              </div>
+              <div class="rounded-3xl border border-dusk/15 bg-white/90 p-8">
+                <h3 class="font-serif text-2xl text-ink">What's Next</h3>
+                <p class="mt-4 text-base text-dusk/90">The guide and community invite are just the start. Coming next:</p>
+                <ul class="mt-4 space-y-3 text-sm text-dusk/90">
+                  <li>• A parent-to-parent workbook that helps your family do the work together.</li>
+                  <li>• Live gatherings—small circles of connected parents both in-person and online.</li>
+                  <li>• Workshops for schools and organizations that want to equip their parent communities.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-dusk py-12 text-parchment">
+      <div class="mx-auto flex max-w-5xl flex-col gap-6 px-6 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="font-serif text-lg">The Missing Conversations</p>
+          <p class="text-sm text-parchment/80">
+            Email:
+            <a href="mailto:themissingconversationsguide@gmail.com" class="underline">themissingconversationsguide@gmail.com</a>
+          </p>
+          <p class="text-sm text-parchment/70">&copy; <span id="current-year"></span> The Missing Conversations.</p>
+        </div>
+        <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-parchment/80">
+          <a href="#hero" class="hover:text-parchment">Home</a>
+          <a href="#journey" class="hover:text-parchment">Journey</a>
+          <a href="#conversations" class="hover:text-parchment">Conversations</a>
+          <a href="#free-guide" class="hover:text-parchment">Free Guide</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="src/js/main.js"></script>
+  </body>
+</html>
