@@ -1,6 +1,6 @@
-# The Missing Conversations (MVP)
+# Family Throughlines Website (MVP)
 
-Single-page marketing site for **The Missing Conversations**, built with semantic HTML and Tailwind CSS utilities.
+Single-page marketing site for **Family Throughlines**, built with semantic HTML and Tailwind CSS utilities.
 
 ## Getting Started
 
