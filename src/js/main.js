@@ -1,6 +1,3 @@
-Main · JS
-Copy
-
 // ── Mobile menu ─────────────────────────────────────────────────────────────
 const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
 const mobileMenu = document.getElementById("mobile-menu");
@@ -27,6 +24,7 @@ if (currentYear) {
 (function () {
 
   const KIT_FORM_ID = "9117315";
+  const KIT_API_KEY = "nDt2H6Z46daBKLuAwZv7eA"; // ← REPLACE THIS: Kit → Settings → Advanced → "API Key"
 
   const STORAGE_KEY = "ft_overlay_seen";
   const backdrop    = document.getElementById("ft-overlay-backdrop");
@@ -34,10 +32,12 @@ if (currentYear) {
   if (!backdrop) return;
 
   // Don't show if visitor has already interacted
-  if (localStorage.getItem(STORAGE_KEY)) {
-    backdrop.style.display = "none";
-    return;
-  }
+  try {
+    if (localStorage.getItem(STORAGE_KEY)) {
+      backdrop.style.display = "none";
+      return;
+    }
+  } catch (e) {}
 
   const closeBtn   = document.getElementById("ft-overlay-close");
   const dismissBtn = document.getElementById("ft-overlay-dismiss");
@@ -60,20 +60,25 @@ if (currentYear) {
     try { localStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
   }
 
+  function showSuccess() {
+    if (form)       form.style.display       = "none";
+    if (dismissBtn) dismissBtn.style.display = "none";
+    if (successMsg) successMsg.removeAttribute("hidden");
+    setTimeout(closeOverlay, 4000);
+  }
+
   if (closeBtn)   closeBtn.addEventListener("click", closeOverlay);
   if (dismissBtn) dismissBtn.addEventListener("click", closeOverlay);
 
-  // Close on backdrop click (outside the card)
   backdrop.addEventListener("click", function (e) {
     if (e.target === backdrop) closeOverlay();
   });
 
-  // Close on Escape
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && backdrop.style.display !== "none") closeOverlay();
   });
 
-  // Form submit → Kit API
+  // Form submit → Kit v3 API (correct endpoint + public API key)
   if (form) {
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -87,44 +92,49 @@ if (currentYear) {
         return;
       }
 
-      // Optimistic UI — disable while submitting
       submitBtn.textContent = "Sending\u2026";
       submitBtn.disabled = true;
       if (emailInput) emailInput.disabled = true;
 
       try {
         const res = await fetch(
-          `https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`,
+          `https://api.convertkit.com/v3/forms/${KIT_FORM_ID}/subscribe`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json; charset=utf-8" },
-            body: JSON.stringify({ email_address: email }),
+            body: JSON.stringify({
+              api_key: KIT_API_KEY,
+              email: email,
+            }),
           }
         );
 
-        if (res.ok || res.status === 200 || res.status === 201) {
-          // Show success state inside the card
-          form.style.display = "none";
-          if (dismissBtn) dismissBtn.style.display = "none";
-          if (successMsg) successMsg.removeAttribute("hidden");
-          // Auto-close after they read the confirmation
-          setTimeout(closeOverlay, 4000);
+        const data = await res.json();
+
+        // Kit returns { subscription: { ... } } on success
+        if (data && data.subscription) {
+          showSuccess();
         } else {
-          throw new Error("Kit API returned " + res.status);
+          throw new Error(JSON.stringify(data));
         }
+
       } catch (err) {
-        // Graceful fallback — open mailto so the lead isn't lost
-        console.warn("Kit submission failed, falling back to mailto:", err);
-        const subject = encodeURIComponent("Navigator's Pocket Guide Request");
-        const body    = encodeURIComponent(
-          "Hi Whit,\n\nPlease send me the Navigator's Pocket Guide PDF.\n\nThanks!"
-        );
-        window.location.href =
-          "mailto:themissingconversationsguide@gmail.com" +
-          "?subject=" + subject +
-          "&body=" + body +
-          "&reply-to=" + encodeURIComponent(email);
-        setTimeout(closeOverlay, 1500);
+        console.warn("Kit submission error:", err);
+        // Re-enable the form so they can try again
+        submitBtn.textContent = "Send Me the Pocket Guide \u2192";
+        submitBtn.disabled = false;
+        if (emailInput) {
+          emailInput.disabled = false;
+          emailInput.style.borderColor = "#c0392b";
+        }
+        // Show inline error if not already there
+        if (!document.getElementById("ft-overlay-error")) {
+          const errEl = document.createElement("p");
+          errEl.id = "ft-overlay-error";
+          errEl.style.cssText = "font-size:0.82rem;color:#c0392b;margin-top:0.4rem;text-align:center;";
+          errEl.textContent = "Something went wrong \u2014 please try again or email me directly at themissingconversationsguide@gmail.com";
+          form.appendChild(errEl);
+        }
       }
     });
   }
