@@ -189,6 +189,173 @@
           border-radius: 22px;
         }
       }
+      /* ── Navigator's Pocket Guide Overlay ────────────────────────── */
+      #ft-overlay-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(32, 26, 20, 0.72);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        backdrop-filter: blur(3px);
+        animation: ftFadeIn 0.35s ease forwards;
+      }
+      @keyframes ftFadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      #ft-overlay-card {
+        position: relative;
+        background: #f7f0e7;
+        background-image:
+          radial-gradient(circle at 1px 1px, rgba(50,41,47,0.04) 1px, transparent 0),
+          linear-gradient(135deg, rgba(181,101,29,0.10), transparent 60%);
+        background-size: 24px 24px, 100% 100%;
+        border-radius: 24px;
+        border: 1px solid rgba(50,41,47,0.14);
+        box-shadow: 0 32px 80px -20px rgba(20,14,10,0.55);
+        max-width: 520px;
+        width: 100%;
+        padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 5vw, 2.75rem);
+        animation: ftSlideUp 0.38s cubic-bezier(0.22,1,0.36,1) forwards;
+        overflow: hidden;
+      }
+      #ft-overlay-card::after {
+        content: "";
+        position: absolute;
+        inset: 1.2rem;
+        border: 1px dashed rgba(181,101,29,0.22);
+        border-radius: 18px;
+        pointer-events: none;
+      }
+      @keyframes ftSlideUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      #ft-overlay-close {
+        position: absolute;
+        top: 1.1rem;
+        right: 1.2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9a8878;
+        font-size: 1.4rem;
+        line-height: 1;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        transition: color 0.2s;
+        z-index: 1;
+      }
+      #ft-overlay-close:hover { color: #32292f; }
+      #ft-overlay-card .ft-eyebrow {
+        font-family: "Lato", system-ui, sans-serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #b5651d;
+        margin-bottom: 0.6rem;
+      }
+      #ft-overlay-card h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.55rem, 3.5vw, 2rem);
+        line-height: 1.2;
+        color: #32292f;
+        margin-bottom: 1rem;
+      }
+      #ft-overlay-card p {
+        font-size: 0.97rem;
+        line-height: 1.65;
+        color: #4a3f3a;
+        margin-bottom: 0.75rem;
+      }
+      #ft-overlay-card ul {
+        margin: 0.5rem 0 1.25rem 0;
+        padding: 0;
+        list-style: none;
+      }
+      #ft-overlay-card ul li {
+        font-size: 0.9rem;
+        color: #4a3f3a;
+        padding: 0.2rem 0;
+        display: flex;
+        gap: 0.5rem;
+      }
+      #ft-overlay-card ul li::before {
+        content: "✥";
+        color: #b5651d;
+        font-size: 0.75rem;
+        position: relative;
+        top: 0.2rem;
+        flex-shrink: 0;
+      }
+      #ft-overlay-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+      #ft-overlay-form input[type="email"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid rgba(50,41,47,0.22);
+        border-radius: 10px;
+        background: rgba(255,255,255,0.7);
+        font-family: "Lato", system-ui, sans-serif;
+        font-size: 0.95rem;
+        color: #32292f;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        box-sizing: border-box;
+      }
+      #ft-overlay-form input[type="email"]:focus {
+        border-color: #b5651d;
+        box-shadow: 0 0 0 3px rgba(181,101,29,0.15);
+      }
+      #ft-overlay-form input[type="email"]::placeholder { color: #9a8878; }
+      #ft-overlay-submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+        border-radius: 999px;
+        background: #2d3a3f;
+        color: #f7f0e7;
+        font-family: "Lato", system-ui, sans-serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.85rem 1.5rem;
+        transition: background 0.2s, transform 0.15s;
+        width: 100%;
+      }
+      #ft-overlay-submit:hover {
+        background: #b5651d;
+        transform: translateY(-1px);
+      }
+      #ft-overlay-dismiss {
+        text-align: center;
+        margin-top: 0.75rem;
+        font-size: 0.8rem;
+        color: #9a8878;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-family: "Lato", system-ui, sans-serif;
+        padding: 0;
+        transition: color 0.2s;
+      }
+      #ft-overlay-dismiss:hover { color: #32292f; }
+      #ft-overlay-divider {
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #b5651d, rgba(181,101,29,0));
+        border-radius: 999px;
+        margin: 1rem 0 1.25rem;
+        opacity: 0.7;
+      }
     </style>
   </head>
   <body class="antialiased">
@@ -461,8 +628,7 @@
         <p class="mb-4 text-base">
             
         </p>
-        <a href="mailto:familythroughlines@gmail.com?subject=Send%20me%20the%20Pocket%20Guide" 
-           class="inline-flex items-center justify-center rounded-full bg-dusk px-8 py-4 text-base font-semibold text-parchment transition hover:bg-clay shadow-md">
+        <a href="/cdn-cgi/l/email-protection#8ee8efe3e7e2f7fae6fce1fbe9e6e2e7e0ebfdcee9e3efe7e2a0ede1e3b1fdfbece4ebedfab3ddebe0eaabbcbee3ebabbcbefae6ebabbcbedee1ede5ebfaabbcbec9fbe7eaeb" class="inline-flex items-center justify-center rounded-full bg-dusk px-8 py-4 text-base font-semibold text-parchment transition hover:bg-clay shadow-md">
             Email Whit for the PDF
         </a>
     </div>
@@ -533,10 +699,7 @@
                   This project grows through conversation. Send a short email to share who you are, what your kids are facing, and what brought you to the community. 
                   I read and reply to every note personally.
                 </p>
-                <a
-                  href="mailto:familythroughlines@gmail.com?subject=I'd%20love%20to%20join%20the%20community"
-                  class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-dusk px-6 py-3 text-sm font-semibold text-parchment transition hover:bg-clay"
-                  >Email Whit &amp; Join the Community</a
+                <a href="/cdn-cgi/l/email-protection#b0d6d1ddd9dcc9c4d8c2dfc5d7d8dcd9ded5c3f0d7ddd1d9dc9ed3dfdd8fc3c5d2dad5d3c48df997d4958280dcdfc6d5958280c4df958280dadfd9de958280c4d8d5958280d3dfddddc5ded9c4c9" class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-dusk px-6 py-3 text-sm font-semibold text-parchment transition hover:bg-clay">Email Whit &amp; Join the Community</a
                 >
               </div>
               <div class="rounded-3xl border border-dusk/15 bg-white/90 p-8">
@@ -560,19 +723,48 @@
           <p class="font-serif text-lg">Family Throughlines</p>
           <p class="text-sm text-parchment/80">
             Email:
-            <a href="mailto:familythroughlines@gmail.com" class="underline">familythroughlines@gmail.com</a>
+            <a href="/cdn-cgi/l/email-protection#f395929e9a9f8a879b819c86949b9f9a9d9680b3949e929a9fdd909c9e" class="underline"><span class="__cf_email__" data-cfemail="adcbccc0c4c1d4d9c5dfc2d8cac5c1c4c3c8deedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
           </p>
           <p class="text-sm text-parchment/70">&copy; <span id="current-year"></span> Family Throughlines.</p>
         </div>
         <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-parchment/80">
           <a href="#hero" class="hover:text-parchment">Home</a>
           <a href="#journey" class="hover:text-parchment">Journey</a>
-          <a href="#conversations" class="hover:text-parchment">Conversations</a>
-          <a href="#free-guide" class="hover:text-parchment">Free Guide</a>
+          <a href="https://www.amazon.com/dp/B0G84Q1JL4" target="_blank" class="hover:text-parchment font-semibold">Buy the Book</a>
         </nav>
       </div>
     </footer>
 
-    <script src="src/js/main.js"></script>
+    <!-- ── Navigator's Pocket Guide Overlay ─────────────────────── -->
+    <div id="ft-overlay-backdrop" role="dialog" aria-modal="true" aria-labelledby="ft-overlay-title" hidden>
+      <div id="ft-overlay-card">
+        <button id="ft-overlay-close" aria-label="Close">&times;</button>
+        <p class="ft-eyebrow">Free Gift for Visitors</p>
+        <h2 id="ft-overlay-title">Take the Navigator's<br>Pocket Guide with you.</h2>
+        <div id="ft-overlay-divider"></div>
+        <p>Welcome to the Family Throughlines community! Grab your free Navigator's Pocket Guide to briefly explore the core frameworks.</p>
+        <ul>
+          <li>The four parts of your family compass</li>
+          <li>The conversation non-negotiables that make hard conversations go better</li>
+          <li>The five conversation types and when to use each</li>
+          <li>A one-page conversation guide to help you prepare for difficult talks</li>
+        </ul>
+        <p style="font-size:0.88rem; color:#6b5a50;">Drop your email below. I'll send the Pocket Guide and follow up with a personal welcome to the community.</p>
+        <form id="ft-overlay-form" novalidate>
+          <input type="email" id="ft-overlay-email" placeholder="your@email.com" autocomplete="email" required />
+          <button type="submit" id="ft-overlay-submit">Send Me the Pocket Guide →</button>
+        </form>
+        <button id="ft-overlay-dismiss" type="button">No thanks, I'll browse without it</button>
+        <!-- Success state — hidden until Kit confirms subscription -->
+        <div id="ft-overlay-success" hidden style="text-align:center; padding: 0.5rem 0;">
+          <p style="font-size:1.5rem; margin-bottom:0.5rem;">✓</p>
+          <p style="font-weight:700; color:#32292f; margin-bottom:0.4rem;">You're in. Watch for it in your inbox.</p>
+          <p style="font-size:0.9rem; color:#6b5a50;">The Pocket Guide is on its way and you'll hear from me personally to welcome you to the community.</p>
+        </div>
+      </div>
+    </div>
+    <!-- ── End Overlay ─────────────────────────────────────────── -->
+
+    <script src="src/js/main.js" defer></script>
   </body>
 </html>
